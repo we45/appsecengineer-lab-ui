@@ -1,0 +1,127 @@
+/* // Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+
+$paytone-font: 'Paytone One', sans-serif;
+
+$primary: #ff5e62;
+$secondary: #5451e1;
+$accent: #57d9a6;
+$dark: #1d1d1d;
+$positive: #21ba45;
+$negative: #c10015;
+$info: #31ccec;
+$warning: #f2c037;
+
+$white: #ffffff;
+
+$green: #57d9a6;
+$gray: #6b6b6b;
+$btn: #2b2d7d;
+$btnhover: #2b2d7d;
+$portalColor: #000032;
+$darkOrange: #ff754c;
+
+$secondaryprimary: #2d3eba;
+$black-shade: #11142d;
+
+$night-blue: #030347 !default;
+$iron: #d0d2d3;
+$aqua-green: #00da9f !default;
+$bittersweet: #ff5e62;
+$light-gray: #f3f3f8 !default;
+$light-gray-2: #cdcdda;
+$green-medium: #00ba88 !default;
+
+//new styling
+$typography-font-family: avenirregular !default;
+$min-line-height: 1.12 !default;
+$text-color: #030347;
+
+$generic-border-radius: 2px !default;
+
+$separator-color: #e0e4ed;
+$dark-separator-color: #352c88;
+
+$statistics-active-card: #4173d0;
+
+//custom defined appsec styling
+$green-12: #06e6aa !default;
+$green-11: #48d091 !default;
+$green-10: #00dba0 !default;
+$green-13: #00da9f1a !default;
+
+$blue-12: #4173d0;
+$blue-11: #31287d !default;
+$blue-10: #2d2573 !default;
+$blue-9: #2b236c !default;
+$blue-8: #352688 !default;
+
+$purple-light-1: rgba(102, 0, 255, 0.12);
+$purple-light-2: rgba(84, 81, 225, 0.12);
+
+$grey-12: #edf1fa !default;
+$grey-6: #fefdfe !default;
+$grey-4: #fdefef;
+$grey-8: #bec8df;
+$grey-10: #d4dff8;
+$grey-2: #cacccd;
+$grey-light: #03034766;
+$grey-13: #cdcdda !default;
+
+$black-12: #141428 !default;
+$black-11: #10013f;
+$disabled-color: #cdcdda;
+
+//dark m1de
+$dark-body-color: #03053d !default;
+$dark-page-color: #02032d !default;
+// used by dark mode
+$dark-page: $dark-body-color !important;
+$dark: $dark-body-color !important;
+
+$subtitle1: (
+  size: 16px,
+  line-height: 23px,
+  letter-spacing: 0.00937em,
+  weight: 400
+) !default;
+
+@mixin common-font {
+  size: 16px;
+  line-height: 23px;
+  weight: 400;
+}
+
+//new dark colors
+$dark-bg-1: #16164b;
+$dark-bg-2: #1a1b43;
+$dark-bg-3: #f3f3f81a;
+$dark-bg-4: #ffffff9c;
+
+//shadow
+$shadow-light: #0303471a;
+$shadow-deep: #03034733;
+
+//gradiant
+$automic-tangerine: linear-gradient(90deg, #ff5e62 0%, #ff9963 100%);
+$primary-light: #ff5e621f;
+
+$yellow-light: #efb01424;
+$yellow: #efb014;
+
+$indigo-1: #6600ff;
+$indigo-2: #5451e1;
+
+$error-light: #ff5e6233; */

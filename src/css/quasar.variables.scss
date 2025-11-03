@@ -1,0 +1,164 @@
+$paytone-font: 'Paytone One', sans-serif;
+$typography-font-family: avenirregular !default;
+$generic-border-radius: 2px !default;
+
+/* === Brand === */
+$primary: var(--color-primary);
+$secondary: var(--color-secondary);
+$accent: var(--color-accent);
+
+/* === Feedback === */
+$success: var(--color-success);
+$success-light: var(--color-success-light);
+
+$error: var(--color-error);
+$error-light: var(--color-error-light);
+
+$warning: var(--color-warning);
+$warning-light: var(--color-warning-light);
+
+$info: var(--color-info);
+
+/* === Backgrounds === */
+$bg-page: var(--color-bg-page);
+$bg-surface: var(--color-bg-surface);
+$bg-primary: var(--color-bg-primary);
+$bg-dark: var(--color-bg-dark);
+$bg-item: var(--color-bg-item);
+$bg-disabled: var(--color-bg-disabled);
+$bg-white: var(--color-bg-white);
+$bg-input: var(--color-bg-input);
+
+/* === Text === */
+$text-primary: var(--color-text-primary);
+$text-secondary: var(--color-text-secondary);
+$text-light-1: var(--color-text-light-1);
+$text-light-2: var(--color-text-light-2);
+
+/* === Shadows === */
+$shadow-light: var(--color-shadow-light);
+$shadow-deep: var(--color-shadow-deep);
+$shadow-thin: var(--color-shadow-thin);
+$shadow-drop: var(--color-shadow-drop);
+
+/* === Borders === */
+$border-1: var(--color-border-1);
+$border-2: var(--color-border-2);
+$border-3: var(--color-border-3);
+$border-4: var(--color-border-4);
+$border-5: var(--color-border-5);
+
+$separator: var(--color-separator);
+$blur: var(--color-blur);
+
+/* === Extended === */
+$indigo-1: var(--color-indigo-1);
+$indigo-2: var(--color-indigo-2);
+$indigo-light-1: var(--color-indigo-light-1);
+$indigo-light-2: var(--color-indigo-light-2);
+
+$tangerine-1: var(--color-tangerine-1);
+$tangerine-2: var(--color-tangerine-2);
+
+$light-pink-1: var(--color-light-pink-1);
+$light-pink-2: var(--color-light-pink-2);
+
+$secondary-light-1: var(--color-secondary-light-1);
+
+$indigo-gradient: linear-gradient(90deg, $indigo-1 34.33%, $indigo-2 87.19%);
+$indigo-gradient-light: linear-gradient(90deg, $indigo-light-1 34.33%, $indigo-light-2 87.19%);
+
+$pink-gradient: linear-gradient(90deg, $light-pink-1 0%, $light-pink-2 100%);
+$tangerine-gradient: linear-gradient(90deg, $tangerine-1 0%, $tangerine-2 100%);
+
+/* === Typography === */
+$typography-font-family: avenirregular, sans-serif !default;
+$text-color: $text-primary;
+
+// /unused
+
+/* Typography */
+$paytone-font: 'Paytone One', sans-serif;
+$typography-font-family: avenirregular !default;
+$min-line-height: 1.12 !default;
+$subtitle1: (
+  size: 16px,
+  line-height: 23px,
+  letter-spacing: 0.00937em,
+  weight: 400
+) !default;
+@mixin common-font {
+  size: 16px;
+  line-height: 23px;
+  weight: 400;
+}
+
+/* Neutrals / Generic */
+$white: transparent;
+$gray: transparent;
+$btn: transparent;
+$btnhover: transparent;
+$portalColor: transparent;
+$darkOrange: transparent;
+$secondaryprimary: transparent;
+$black-shade: transparent;
+$night-blue: transparent;
+$iron: transparent;
+$aqua-green: transparent;
+$bittersweet: transparent;
+$light-gray: transparent;
+$light-gray-2: transparent;
+$green-medium: transparent;
+$statistics-active-card: transparent;
+
+/* Greens (extended) */
+$green-12: transparent;
+$green-11: transparent;
+$green-10: transparent;
+$green-13: transparent;
+
+/* Blues (extended) */
+$blue-12: transparent;
+$blue-11: transparent;
+$blue-10: transparent;
+$blue-9: transparent;
+$blue-8: transparent;
+
+/* Purples (tints) */
+$purple-light-1: transparent;
+$purple-light-2: transparent;
+
+/* Greys (extended) */
+$grey-12: transparent;
+$grey-6: transparent;
+$grey-4: transparent;
+$grey-8: transparent;
+$grey-10: transparent;
+$grey-2: transparent;
+$grey-light: transparent;
+$grey-13: transparent;
+
+/* Blacks */
+$black-12: transparent;
+$black-11: transparent;
+
+/* Disabled */
+
+/* Dark mode specific */
+$dark-body-color: transparent;
+$dark-page-color: transparent;
+$dark-page: transparent;
+$dark-bg-1: transparent;
+$dark-bg-2: transparent;
+$dark-bg-3: transparent;
+$dark-bg-4: transparent;
+
+/* Shadows */
+$shadow-light: transparent;
+$shadow-deep: transparent;
+
+/* Gradients & accents */
+$automic-tangerine: transparent;
+$primary-light: transparent;
+$yellow-light: transparent;
+$yellow: transparent;

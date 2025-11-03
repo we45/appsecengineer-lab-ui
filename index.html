@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Defaults -->
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=2, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+    />
+
+    <!-- Primary Meta Tags -->
+    <title>App Sec Engineer</title>
+    <meta name="title" content="App Sec Engineer" />
+    <meta name="description" content="User Portal with updated courses for application security training." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://learning.appsecengineer.com/" />
+    <meta property="og:title" content="App Sec Engineer" />
+    <meta property="og:description" content="User Portal with updated courses for application security training." />
+    <meta property="og:image" content="/favicon-512x512.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://learning.appsecengineer.com/" />
+    <meta property="twitter:title" content="App Sec Engineer" />
+    <meta property="twitter:description" content="User Portal with updated courses for application security training." />
+    <meta property="twitter:image" content="/favicon-512x512.png" />
+
+    <!-- Theme / Favicon -->
+    <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF754C" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="App Sec Engineer" />
+    <meta name="application-name" content="App Sec Engineer" />
+    <meta name="msapplication-TileColor" content="#FF754C" />
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+    <meta name="theme-color" content="#FF754C" />
+
+    <script defer src="https://js.chargebee.com/v2/chargebee.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- Google Analytics -->
+    <script>
+      if (window.origin === 'https://learning.appsecengineer.com') {
+        ;(function (i, s, o, g, r, a, m) {
+          i['GoogleAnalyticsObject'] = r
+          ;(i[r] =
+            i[r] ||
+            function () {
+              ;(i[r].q = i[r].q || []).push(arguments)
+            }),
+            (i[r].l = 1 * new Date())
+          ;(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0])
+          a.async = 1
+          a.src = g
+          m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+        ga('create', 'UA-12164530-11', 'auto')
+        ga('send', 'pageview')
+      }
+    </script>
+    <!-- End Google Analytics -->
+
+    <script defer src="https://player.vimeo.com/api/player.js"></script>
+
+    <script type="text/javascript">
+      !(function (e, t, n) {
+        function a() {
+          var e = t.getElementsByTagName('script')[0],
+            n = t.createElement('script')
+          ;(n.type = 'text/javascript'), (n.async = !0), (n.src = 'https://beacon-v2.helpscout.net'), e.parentNode.insertBefore(n, e)
+        }
+        if (
+          ((e.Beacon = n =
+            function (t, n, a) {
+              e.Beacon.readyQueue.push({ method: t, options: n, data: a })
+            }),
+          (n.readyQueue = []),
+          'complete' === t.readyState)
+        )
+          return a()
+        e.attachEvent ? e.attachEvent('onload', a) : e.addEventListener('load', a, !1)
+      })(window, document, window.Beacon || function () {})
+    </script>
+
+    <script type="text/javascript">
+      if (window.origin === 'https://learning.appsecengineer.com') {
+        var $zoho = $zoho || {}
+        $zoho.salesiq = $zoho.salesiq || {
+          widgetcode: 'siqfa28fd83cb51b4ab318ba9fb796836bd9d85c11ae952e5c956c2b2fc3432a465',
+          values: {},
+          ready: function () {}
+        }
+        var d = document
+        s = d.createElement('script')
+        s.type = 'text/javascript'
+        s.id = 'zsiqscript'
+        s.defer = true
+        s.src = 'https://salesiq.zoho.in/widget'
+        t = d.getElementsByTagName('script')[0]
+        t.parentNode.insertBefore(s, t)
+        d.write("<div id='zsiqwidget'></div>")
+      }
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      if (window.origin === 'https://learning.appsecengineer.com') {
+        ;(function (w, d, s, l, i) {
+          w[l] = w[l] || []
+          w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+          })
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : ''
+          j.async = true
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+          f.parentNode.insertBefore(j, f)
+        })(window, document, 'script', 'dataLayer', 'GTM-PQQJSPG')
+      }
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+
+  <body>
+    <!-- quasar:entry-point -->
+    <script src="https://cdn.clearfeed.app/chat-widget.js"></script>
+  </body>
+</html>

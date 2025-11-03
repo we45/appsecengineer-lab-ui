@@ -1,0 +1,66 @@
+:root {
+  --color-primary: #ff5e62;
+  --color-secondary: #00da9f;
+  --color-accent: #6600ff;
+
+  --color-success: #21ba45;
+  --color-success-light: #00da9f1a;
+  --color-error: #c10015;
+  --color-error-light: #ff5e6233;
+  --color-warning: #efb014;
+  --color-warning-light: #efb01424;
+  --color-info: #31ccec;
+
+  --color-bg-page: #edf1fa;
+  --color-bg-surface: #f3f3f8;
+  --color-bg-primary: #ffffff;
+  --color-bg-dark: #030347;
+  --color-bg-item: #000032;
+  --color-bg-disabled: #cdcdda;
+  --color-bg-white: #ffffff;
+  --color-bg-input: #f8f8fb;
+
+  --color-text-primary: #030347;
+  --color-text-secondary: #000000;
+  --color-text-light-1: #03034766;
+  --color-text-light-2: #ffffff;
+
+  --color-shadow-light: #0303471a;
+  --color-shadow-deep: #03034733;
+  --color-shadow-thin: #00000012;
+  --color-shadow-drop: #03034740;
+
+  --color-border-1: #e0e4ed;
+  --color-border-2: #352c88;
+  --color-border-3: #cdcdda33;
+  --color-border-4: #ffffff9c;
+  --color-border-5: #ffffffb2;
+
+  --color-separator: #e0e4ed;
+  --color-blur: #9e9d9d;
+
+  --color-indigo-1: #6600ff;
+  --color-indigo-2: #5451e1;
+  --color-indigo-light-1: #6600ff1a;
+  --color-indigo-light-2: #5451e11a;
+
+  --color-tangerine-1: #ff5e62;
+  --color-tangerine-2: #ff9963;
+
+  --color-light-pink-1: #ec008c1a;
+  --color-light-pink-2: #662d911a;
+
+  --color-secondary-light-1: #07e6aa1a;
+}
+
+.body--dark {
+  --color-text-primary: #ffffff;
+  --color-bg-page: #02032d;
+  --color-bg-primary: #030347;
+  --color-bg-surface: #1a1b43;
+  --color-bg-dark: #16164b;
+  --color-bg-input: #16164b;
+  --color-text-light-1: #ffffff;
+  --color-separator: #ffffff47;
+  --color-border-1: #ffffff47;
+}

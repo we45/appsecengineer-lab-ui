@@ -1,0 +1,16 @@
+.base-table {
+  font-size: 16px;
+  :deep(tbody) {
+    tr:nth-child(2n) {
+      background: $grey-12;
+    }
+  }
+
+  &.q-dark {
+    :deep(tbody) {
+      tr:nth-child(2n) {
+        background: $blue-11;
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+name = 'community-appsecengineer'
+type = 'webpack'
+workers_dev = false

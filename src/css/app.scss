@@ -1,0 +1,455 @@
+// app global css in SCSS form
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600&display=swap');
+
+@font-face {
+  font-family: avenirbold;
+  src: url('../assets/font/Avenir\ Next\ LT\ Pro/Avenir\ Next\ LT\ Pro\ Bold.otf');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: avenirregular;
+  src: url('../assets/font/Avenir\ Next\ LT\ Pro/Avenir\ Next\ LT\ Pro\ Regular.otf');
+  font-display: swap;
+}
+
+html {
+  font-size: 16px;
+}
+@media screen and (max-width: 720px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 560px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 320px) {
+  html {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 240px) {
+  html {
+    font-size: 9px;
+  }
+}
+
+.nav-arrow {
+  left: -16px;
+}
+
+//public-proflie-page
+.public-profile-page {
+  max-width: 1080px;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+.q-timeline__subtitle {
+  opacity: 1 !important;
+}
+
+.apexcharts-tooltip {
+  z-index: 10000 !important;
+}
+
+.body {
+  size: 16px;
+  line-height: 23px;
+  font-weight: 400;
+}
+
+.d-none {
+  text-decoration: none;
+}
+
+.q-page,
+.q-page-container {
+  padding: 30px 20px;
+  color: $text-primary !important;
+  background: $bg-page;
+}
+
+@mixin item-select {
+  background: $indigo-gradient;
+  color: $text-light-2;
+  font-family: avenirbold !important;
+}
+
+.s-list {
+  .admin-sidebar-item {
+    color: $text-primary !important;
+    .sidebar-item-label {
+      font-size: 14px !important;
+    }
+  }
+
+  .sidebar-link-item {
+    border-radius: (3 * $generic-border-radius);
+    margin: 0.5rem 1rem;
+    background-color: $bg-surface !important;
+
+    &.q-item--dark {
+      background-color: $bg-dark !important;
+    }
+
+    .sidebar-item-label {
+      font-size: 16px !important;
+      color: $text-primary !important;
+    }
+
+    &.mini-item {
+      height: 50px;
+      width: 50px;
+    }
+
+    &:hover {
+      background-color: $bg-surface !important;
+    }
+  }
+
+  .q-router-link--active {
+    @include item-select;
+    &.admin-sidebar-item {
+      background: $bg-dark !important;
+    }
+    .sidebar-item-label {
+      font-weight: bold;
+      color: $text-light-2 !important;
+    }
+  }
+}
+
+.base-tabs {
+  &.q-tabs {
+    border: 1px solid $separator-color;
+    .q-tab {
+      padding: 0 40px;
+    }
+  }
+}
+
+.q-btn-toggle button[aria-pressed='true'] {
+  font-family: avenirbold !important;
+}
+
+.q-card {
+  border-radius: (5 * $generic-border-radius) !important;
+  &.bt-p {
+    border-top: (1 * $generic-border-radius) solid $blue-12 !important;
+  }
+  &.rectangle {
+    border-radius: 0px !important;
+  }
+  .q-card__section {
+    &.stats {
+      border-radius: 4px;
+      background: $grey-12;
+      &.active {
+        background-color: $statistics-active-card;
+        color: white;
+      }
+    }
+  }
+  //dark mode
+  &.q-dark {
+    .q-card__section {
+      &.stats {
+        background: $dark-page-color;
+      }
+    }
+  }
+}
+
+.q-menu {
+  max-width: 100% !important;
+}
+
+.bordered {
+  border: 1px solid $separator-color;
+}
+
+.br-4 {
+  border-radius: (2 * $generic-border-radius) !important;
+}
+.br-2 {
+  border-radius: (2 * $generic-border-radius) !important;
+}
+
+.full-border {
+  border: 1px solid $separator-color;
+}
+
+.base-expansion {
+  .item__header {
+    border: 1px solid $separator-color;
+    border-radius: 2px;
+  }
+  // background-color: red;
+}
+
+//color combination
+
+.text-dark-primary {
+  color: $dark-body-color !important;
+}
+
+//dark mode color
+.body--dark {
+  .navbar,
+  .q-page {
+    background-color: $dark-page-color !important;
+  }
+}
+
+.q-tabs {
+  border: 1px solid $separator-color !important;
+  border-radius: 4px;
+}
+
+.q-tab-panel {
+  border: 1px solid $separator-color;
+  border-radius: 4px;
+}
+.q-tab-asking {
+  padding: 10px;
+  width: 20%;
+}
+//line-height
+$line-heights: (
+  l-23: 23px,
+  l-18: 18px,
+  l-26: 26px
+);
+
+// Define a mixin to generate line-height classes
+@mixin generate-line-height-classes {
+  @each $class, $line-height in $line-heights {
+    .#{$class} {
+      line-height: $line-height !important;
+    }
+  }
+}
+
+// Include the mixin to generate the classes
+@include generate-line-height-classes;
+
+.vue-apexcharts {
+  border: 1px solid $separator-color;
+  border-radius: 4px;
+}
+.q-loading-spin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 20px;
+}
+
+.q-layout__shadow {
+  bottom: 0px !important;
+  &::after {
+    box-shadow: none !important;
+  }
+}
+
+// use this class to get Avenir bold font
+
+//use this class to get Paytone Font beacause Avenir is by default
+.font-paytone {
+  font-family: $paytone-font, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif !important;
+}
+
+.text-electric-eminence {
+  background: $pink-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-bittersweet {
+  background-color: $bittersweet !important;
+  font-family: avenirbold !important;
+  color: $white;
+  border-radius: 1.5rem !important;
+}
+
+.bg-indigo-gradiant {
+  background: $indigo-gradient !important;
+}
+
+.bg-automic-tangerine {
+  background: $tangerine-gradient !important;
+}
+
+.bg-light-pink {
+  background: $pink-gradient;
+}
+
+.text-indigo {
+  color: $indigo-1 !important;
+}
+.bg-indigo-gradiant-light {
+  background: $indigo-gradient-light !important;
+}
+
+.text-electric-eminence {
+  background: $pink-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bg-light-pink {
+  background: $pink-gradient;
+}
+
+.aqua-green-text {
+  color: $aqua-green;
+}
+
+.bg-night-blue {
+  background-color: $night-blue !important;
+}
+
+.text-night-blue {
+  color: $night-blue !important;
+}
+
+.bg-dark-1 {
+  background-color: $dark-bg-1 !important;
+}
+
+.bg-dark-2 {
+  background-color: $dark-bg-2 !important;
+}
+
+.bg-dark-3 {
+  background: $dark-bg-3 !important;
+}
+
+.bg-dark-4 {
+  background: $dark-bg-4 !important;
+}
+
+.dark-border {
+  border: 1px solid $border-3 !important;
+}
+
+.bg-dark-night-blue {
+  background-color: $dark-body-color !important;
+}
+
+.btn-rounded-new {
+  border-radius: 20px !important;
+  font-weight: 500;
+  font-family: avenirbold;
+  border: none !important;
+  &:before {
+    box-shadow: none;
+  }
+
+  &.green-btn {
+    background: $aqua-green !important;
+    color: $night-blue !important;
+  }
+
+  &.bitterweet-btn {
+    background: $bittersweet !important;
+    color: $text-light-2 !important;
+  }
+
+  &.btn-outlined {
+    &.green-btn {
+      background: transparent !important;
+      border: 1px solid $green-medium !important;
+      color: $green-medium !important;
+    }
+
+    &.bitterweet-btn {
+      background: transparent !important;
+      border: 1px solid $bittersweet !important;
+      color: $bittersweet !important;
+    }
+  }
+}
+
+.dark-border-lighter {
+  border: 0.5px solid $light-gray-2;
+}
+
+.bg-primary-light {
+  background-color: $primary-light !important;
+}
+
+.btn-disabled {
+  color: $text-light-2 !important;
+  cursor: not-allowed !important;
+}
+
+.text-grey-light {
+  color: $grey-light !important;
+}
+
+.text-night-blue {
+  color: $night-blue !important;
+}
+
+.three-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bg-light-grey {
+  background: $light-gray !important;
+}
+
+.text-aqua-green {
+  color: $aqua-green;
+}
+
+.bg-aqua-green {
+  background: $aqua-green !important;
+}
+
+.hide-scroll {
+  overflow-y: scroll;
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.body--dark {
+  .text-night-blue {
+    color: white !important;
+  }
+}
+
+.text-placeholder {
+  color: $blur !important;
+}
