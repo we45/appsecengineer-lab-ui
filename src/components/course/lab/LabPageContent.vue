@@ -232,7 +232,10 @@ defineComponent({ name: 'LabPageContent' })
 
 const props = defineProps({
   id: { required: false },
-  provisionerToken: { type: String, required: false, default: undefined }
+  provisionerToken: { type: String, required: false, default: undefined },
+  tokenData: { type: String, required: false, default: undefined },
+  partnerId: { type: String, required: false, default: undefined },
+  isTokenBasedFlow: { type: Boolean, required: false, default: false }
 })
 
 const addLongDelay = shallowRef(false)
@@ -336,7 +339,13 @@ async function provisionLab(id) {
   addLongDelay.value = true
   await fetchUsedMinutes()
   const data = {
-    lab_id: id
+    lab_id: id,
+    ...(props.isTokenBasedFlow && props.tokenData && props.partnerId
+      ? {
+          token_data: props.tokenData,
+          partner_id: props.partnerId
+        }
+      : {})
   }
 
   try {
@@ -351,7 +360,13 @@ async function provisionLab(id) {
     if (status.success) {
       let progressStatus = await labProvisionStore.progressProvisioner({
         lab_id: id,
-        event_id: data.event_id
+        event_id: data.event_id,
+        ...(props.isTokenBasedFlow && props.tokenData && props.partnerId
+          ? {
+              token_data: props.tokenData,
+              partner_id: props.partnerId
+            }
+          : {})
       })
 
       for (let i = 1; i < 10; i++) {
@@ -384,7 +399,13 @@ async function provisionLab(id) {
 
         progressStatus = await labProvisionStore.progressProvisioner({
           lab_id: id,
-          event_id: data.event_id
+          event_id: data.event_id,
+          ...(props.isTokenBasedFlow && props.tokenData && props.partnerId
+            ? {
+                token_data: props.tokenData,
+                partner_id: props.partnerId
+              }
+            : {})
         })
 
         if (progressStatus.success) {
@@ -488,11 +509,21 @@ function stopLab(running_instance_id, instance_id, labInfo) {
 async function labConfirmDeletion(event) {
   isDeleting.value = true
   if (event.show) {
-    const data = {
-      server_id: runningInstanceId.value,
-      server_instance_id: instanceId.value
-    }
-    if (labStore.listLabData[0].is_cloud) {
+    const currentLabData = labStore.listLabData?.[0] ?? null
+    const data =
+      props.isTokenBasedFlow && props.tokenData && props.partnerId
+        ? {
+            lab_id: currentLabData?.id,
+            event_id: currentLabData?.event_id,
+            token_data: props.tokenData,
+            partner_id: props.partnerId
+          }
+        : {
+            server_id: runningInstanceId.value,
+            server_instance_id: instanceId.value
+          }
+
+    if (!props.isTokenBasedFlow && labStore.listLabData[0]?.is_cloud) {
       data.cloud_type = labStore.listLabData[0].cloud_type
     }
 

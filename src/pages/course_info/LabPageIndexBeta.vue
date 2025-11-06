@@ -132,7 +132,13 @@ function openConfetti() {
         :stageWidth="2000"
         :duration="8000"
       />
-      <LabPageContent @hintData="showHintDialog" @verifyLab="showVerifyLabFunction" />
+      <LabPageContent
+        :token-data="tokenData"
+        :partner-id="partnerId"
+        :is-token-based-flow="isTokenBasedFlow"
+        @hintData="showHintDialog"
+        @verifyLab="showVerifyLabFunction"
+      />
     </template>
 
     <template #tabs>

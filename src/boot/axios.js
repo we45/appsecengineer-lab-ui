@@ -99,9 +99,12 @@ function addInterceptors(apiInstance) {
       if (!config.noLoading) {
         useGlobalLoaderStore().start()
       }
-      const token = LocalStorage.getItem('token')
-      if (token) {
-        config.headers['Authorization'] = token
+      // Don't add Authorization header for integration instance - it uses x-ase-api-token instead
+      if (apiInstance !== integration) {
+        const token = LocalStorage.getItem('token')
+        if (token) {
+          config.headers['Authorization'] = token
+        }
       }
       return config
     },

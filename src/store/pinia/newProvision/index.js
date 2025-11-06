@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { Notify } from 'quasar'
 import { api } from 'src/boot/axios'
-import { apiProvisional } from 'src/boot/axios'
+import { apiProvisional, integration } from 'src/boot/axios'
 import { useRouter } from 'vue-router'
 import { useCoursesStore } from '../courses'
 
@@ -47,24 +47,43 @@ export const useNewProvisionStore = defineStore('newProvision', () => {
       statusOfApi.value = false
       markLab.value = false
       isServerDeleted.value = true
-      const res = await apiProvisional.post('provision/delete-server', payload)
+
+      // Use integration API with token-based auth if token_data is provided
+      let res
+      if (payload.token_data && payload.partner_id) {
+        const { token_data, partner_id, lab_id, event_id } = payload
+        const deletePayload = {
+          lab_id,
+          event_id
+        }
+        res = await integration.post('provisioner/delete-server', deletePayload, {
+          headers: {
+            'x-ase-api-token': token_data,
+            'x-ase-customer-id': partner_id
+          }
+        })
+      } else {
+        // Use regular apiProvisional for non-token flows
+        res = await apiProvisional.post('provision/delete-server', payload)
+      }
+
       if (!res.data.success) return
       isServerDeleted.value = false
       res.data.data.mark && (markLab.value = true)
       statusOfApi.value = true
     } catch (error) {
       console.log(error)
-      statusOfApi.value = error.response.status === 404
-      if (error.response.status === 400) {
+      statusOfApi.value = error.response?.status === 404
+      if (error.response?.status === 400) {
         markLab.value = false
         statusOfApi.value = false
       }
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         if (error.response.data.message === 'The incoming token has expired') {
           Notify.create({ type: 'positive', position: 'top', progress: true, message: 'Token expired renewing new token' })
         }
       }
-      if (typeof error.response.data.message === 'string') {
+      if (typeof error.response?.data?.message === 'string') {
         Notify.create({ type: 'negative', position: 'top', progress: true, icon: 'warning', message: error.response.data.message })
       }
     }
@@ -109,7 +128,26 @@ export const useNewProvisionStore = defineStore('newProvision', () => {
   async function forceDeleteLabServer(payload) {
     try {
       isServerDeleted.value = true
-      const res = await apiProvisional.post('provision/force-delete-server', payload)
+
+      // Use integration API with token-based auth if token_data is provided
+      let res
+      if (payload.token_data && payload.partner_id) {
+        const { token_data, partner_id, lab_id, event_id } = payload
+        const deletePayload = {
+          lab_id,
+          event_id
+        }
+        res = await integration.post('provisioner/delete-server', deletePayload, {
+          headers: {
+            'x-ase-api-token': token_data,
+            'x-ase-customer-id': partner_id
+          }
+        })
+      } else {
+        // Use regular apiProvisional for non-token flows
+        res = await apiProvisional.post('provision/force-delete-server', payload)
+      }
+
       if (res.data.success) {
         isServerDeleted.value = false
         router.go()
