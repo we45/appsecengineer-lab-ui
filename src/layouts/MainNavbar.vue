@@ -38,7 +38,7 @@
       </AseButton>
     </template>
 
-    <UserDropdown :onWriteReview="openReviewModel" />
+    <!-- <UserDropdown :onWriteReview="openReviewModel" /> -->
   </q-toolbar>
 </template>
 

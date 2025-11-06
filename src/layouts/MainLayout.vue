@@ -128,12 +128,12 @@ onBeforeMount(async () => {
   const isSeen = LocalStorage.has('seen_devsecops_offer') && LocalStorage.getItem('seen_devsecops_offer')
   showDevopsNotify.value = !isSeen
 
-  assessmentStore.fetchAssessments()
-  await profileStore.fetchProfileDetailedInformation()
-  if (learningPath.learningPathOptions.length === 0) {
-    learningPath.fetchLearningPath({})
-  }
-  checkAndShowRecommendationDialog()
+  // assessmentStore.fetchAssessments()
+  // await profileStore.fetchProfileDetailedInformation()
+  // if (learningPath.learningPathOptions.length === 0) {
+  //   learningPath.fetchLearningPath({})
+  // }
+  // checkAndShowRecommendationDialog()
 })
 
 watch(isDesktop, (newValue) => {
