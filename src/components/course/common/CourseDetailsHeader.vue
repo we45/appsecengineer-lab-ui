@@ -42,7 +42,6 @@ import { useRouter } from 'vue-router'
 
 import FeedbackPage from 'components/feedback/feedBackCommentForm.vue'
 import OverallFeedbackPage from 'components/feedback/feedbackOverallCourse.vue'
-import ChipTab from 'src/components/atoms/ChipTab.vue'
 import { computed } from 'vue'
 import useCourseNavigation from 'src/composables/useCourseNavigation'
 import { Notify } from 'quasar'

@@ -336,10 +336,7 @@ async function provisionLab(id) {
   addLongDelay.value = true
   await fetchUsedMinutes()
   const data = {
-    lab_id: id,
-    event_id: coursesStore.selectedCourseInfo.rawInfo?._key,
-    auth: enableAuth.value,
-    cloud_type: labStore.listLabData[0]?.cloud_type
+    lab_id: id
   }
 
   try {

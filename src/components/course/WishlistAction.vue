@@ -45,12 +45,19 @@
 </template>
 
 <script setup>
-import { useCourseWishlist } from 'src/store/pinia/course/wishlist'
 import { maxLength, minLength } from 'src/utils/rules'
 import { shallowRef, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-const wishlistStore = useCourseWishlist()
+// Wishlist store removed - functionality disabled
+const wishlistStore = {
+  categoryList: [],
+  selectedCategory: { name: '' },
+  isItemInWishlist: () => false,
+  addWishlist: async () => {},
+  removeWishlist: async () => {},
+  addNewCategory: () => {}
+}
 
 const route = useRoute()
 

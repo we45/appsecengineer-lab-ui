@@ -1,5 +1,4 @@
 import { useCoursesStore } from 'src/store/pinia/courses'
-import { useMacroMetaStore } from 'src/store/pinia/macroMeta'
 import { urlSafeBase64Encode } from 'src/utils/reuseFunctions'
 import { shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
@@ -7,7 +6,6 @@ import { useRouter } from 'vue-router'
 export default function useCourseNavigation() {
   const router = useRouter()
   const coursesStore = useCoursesStore()
-  const macroMetaStore = useMacroMetaStore()
 
   const courseLoading = shallowRef(false)
 
@@ -47,10 +45,11 @@ export default function useCourseNavigation() {
     delete rawInfo?.course
     coursesStore.setCourseInfo(rawInfo)
 
-    macroMetaStore.publishCourseStats({
-      course: rawInfo._key,
-      learning_path: rawInfo.learning_path_id
-    })
+    // MacroMeta store removed - course stats not published
+    // macroMetaStore.publishCourseStats({
+    //   course: rawInfo._key,
+    //   learning_path: rawInfo.learning_path_id
+    // })
 
     const resumeUrl = coursesStore.selectedCourseInfo.rawInfo?.resumeURL
     resumeUrl && router.push(resumeUrl)

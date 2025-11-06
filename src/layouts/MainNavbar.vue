@@ -43,11 +43,9 @@
 </template>
 
 <script setup>
-import { responseFromCommunity } from 'app/functions/response'
-import jwt_decode from 'jwt-decode'
 import { LocalStorage, useQuasar } from 'quasar'
 
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import { useLoginStore } from 'src/store/pinia/login'
 import { useUserActivity } from 'src/store/pinia/userActivity'
@@ -55,12 +53,10 @@ import { useScreenSize } from 'src/composables/useScreenSize'
 import { useNavigationItems } from 'src/composables/useNavigationItems'
 
 import UserDropdown from './UserDropdown.vue'
-import G2Review from 'src/components/g2_review/G2Review.vue'
 
 const emit = defineEmits(['toggleSidebar'])
 
 const $q = useQuasar()
-const openReview = ref(false)
 
 const loginStore = useLoginStore()
 const userActivity = useUserActivity()
@@ -71,10 +67,6 @@ const navbarItems = computed(() => getNavbarItems(isMobile.value))
 
 if (LocalStorage.getItem('darkMode')) {
   $q.dark.set(true)
-}
-
-function openReviewModel() {
-  openReview.value = true
 }
 </script>
 

@@ -6,7 +6,6 @@ import { urlSafeBase64Encode } from 'src/utils/reuseFunctions'
 import { useRouter } from 'vue-router'
 import { CacheService } from 'src/service/CacheService'
 import { Notify } from 'quasar'
-import { useDashboardStore } from '../dashboard'
 
 const COURSE = 'course'
 const PLAYGROUND = 'playground'
@@ -215,7 +214,8 @@ export const useCoursesStore = defineStore('coursesStore', () => {
       if (res.data.success) {
         status.data = res.data?.data
         if (res.data?.data?.is_enrolled) {
-          useDashboardStore().dashboardStatistics.total_enrolled += 1
+          // Dashboard store removed - statistics not updated
+          // useDashboardStore().dashboardStatistics.total_enrolled += 1
         }
       }
     } catch (err) {

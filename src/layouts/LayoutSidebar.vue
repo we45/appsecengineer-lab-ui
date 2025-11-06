@@ -86,7 +86,6 @@ import AdminItem from './AdminItem.vue'
 import SidebarItem from './SidebarItem.vue'
 import SidebarMiniItem from './SidebarMiniItem.vue'
 
-import { useConfirmUser } from 'src/store/pinia/confirmUser'
 import { useUserActivity } from 'src/store/pinia/userActivity'
 import { useLoginStore } from 'src/store/pinia/login'
 import { useScreenSize } from 'src/composables/useScreenSize'
@@ -98,7 +97,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { LocalStorage, useQuasar } from 'quasar'
 
 const loginStore = useLoginStore()
-const confirmUser = useConfirmUser()
 const userActivity = useUserActivity()
 
 // Get sidebar items from useNavigationItems composable
