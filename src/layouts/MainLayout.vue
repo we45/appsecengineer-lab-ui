@@ -92,11 +92,9 @@ import LayoutSidebar from './LayoutSidebar.vue'
 import MainNavbar from './MainNavbar.vue'
 import { useAssessmentStore } from 'src/store/pinia/assessments/assessments'
 import { useGlobalLoaderStore } from 'src/store/pinia/loader'
-import { useProfileStore } from 'src/store/pinia/profile'
 import StreakNotification from 'src/components/common/StreakNotification.vue'
 import { useRouter } from 'vue-router'
 import { provideScreenSize } from 'src/composables/useScreenSize'
-import RecomendationForm from 'src/components/profile/RecomendationForm.vue'
 import { useCoursesStore } from 'src/store/pinia/courses'
 import { useDashboardStore } from 'src/store/pinia/dashboard'
 import { useUserActivity } from 'src/store/pinia/userActivity'
@@ -105,7 +103,6 @@ import { useLearningPathStore } from 'src/store/pinia/learningPath'
 const { isMobile, isDesktop } = provideScreenSize()
 const assessmentStore = useAssessmentStore()
 const loader = useGlobalLoaderStore()
-const profileStore = useProfileStore()
 const coursesStore = useCoursesStore()
 const router = useRouter()
 const dashboardStore = useDashboardStore()
@@ -166,19 +163,21 @@ function handleRecommendationCancel() {
 }
 
 function checkAndShowRecommendationDialog() {
-  const ignoredData = LocalStorage.getItem('feedbackFormIgnore')
-  if (profileStore.preferencesSubmitted) {
-    dashboardStore.fetchRecommendedCourses()
-  } else if (ignoredData) {
-    const parsedData = JSON.parse(ignoredData)
-    const userEmail = profileStore.profileDetailedInfo.email
-    const hasIgnored = parsedData.some((item) => item.email === userEmail && item.formIgnore)
-    if (hasIgnored) {
-      return
-    }
-  } else {
-    showRecommendationDialog.value = true
-  }
+  // Profile store removed - recommendation dialog disabled
+  return
+  // const ignoredData = LocalStorage.getItem('feedbackFormIgnore')
+  // if (profileStore.preferencesSubmitted) {
+  //   dashboardStore.fetchRecommendedCourses()
+  // } else if (ignoredData) {
+  //   const parsedData = JSON.parse(ignoredData)
+  //   const userEmail = profileStore.profileDetailedInfo.email
+  //   const hasIgnored = parsedData.some((item) => item.email === userEmail && item.formIgnore)
+  //   if (hasIgnored) {
+  //     return
+  //   }
+  // } else {
+  //   showRecommendationDialog.value = true
+  // }
 }
 </script>
 

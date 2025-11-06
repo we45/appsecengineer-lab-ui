@@ -1,11 +1,8 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 import { ref } from 'vue'
-import { useProfileStore } from '../profile'
 
 export const useAssessmentStore = defineStore('assessment', () => {
-  const profileStore = useProfileStore()
-
   const assessmentLoading = ref(false)
   const assignAssignmentLoading = ref(false)
   const assessments = ref({
@@ -26,9 +23,6 @@ export const useAssessmentStore = defineStore('assessment', () => {
       assessments.value = {
         ...assessments.value,
         ...response?.data?.data?.assessments_info
-      }
-      if (response?.data?.data?.security_champion_teams) {
-        profileStore.securityChampionTeams = response?.data?.data?.security_champion_teams ?? []
       }
     } catch (error) {
       console.warn(error)

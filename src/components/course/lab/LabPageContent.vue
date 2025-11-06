@@ -215,7 +215,6 @@
 import { copyToClipboard, QSpinnerFacebook, LocalStorage, useQuasar } from 'quasar'
 import { useLoginStore } from 'src/store/pinia/login'
 import { defineComponent, ref, shallowRef, watch } from 'vue'
-import { useProfileStore } from 'src/store/pinia/profile'
 import { useNewProvisionStore } from 'src/store/pinia/newProvision'
 import { useAwsProvisionStore } from 'src/store/pinia/awsProvision'
 import { useLabStore } from 'src/store/pinia/lab'
@@ -265,7 +264,6 @@ const disclaimerRules = ref([
 const $q = useQuasar()
 
 const awsProvisionStore = useAwsProvisionStore()
-const profileStore = useProfileStore()
 const loginStore = useLoginStore()
 const labStore = useLabStore()
 const newProvisionStore = useNewProvisionStore()
@@ -553,13 +551,8 @@ function handleInsufficientTimeDialogClose(value) {
 }
 
 async function fetchUsedMinutes() {
-  await profileStore.fetchProfileDetailedInformation(false)
-  if (Number(profileStore.profileDetailedInfo.monthly_minutes) - Number(profileStore.profileDetailedInfo.used_minutes) <= 6) {
-    provisionLabStatus.value = false
-    showInsufficientTimeForLab.value = true
-  } else {
-    provisionLabStatus.value = true
-  }
+  // Profile store removed - always allow provisioning
+  provisionLabStatus.value = true
 }
 </script>
 

@@ -86,7 +86,6 @@ import AdminItem from './AdminItem.vue'
 import SidebarItem from './SidebarItem.vue'
 import SidebarMiniItem from './SidebarMiniItem.vue'
 
-import { useProfileStore } from 'src/store/pinia/profile'
 import { useConfirmUser } from 'src/store/pinia/confirmUser'
 import { useUserActivity } from 'src/store/pinia/userActivity'
 import { useLoginStore } from 'src/store/pinia/login'
@@ -99,7 +98,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { LocalStorage, useQuasar } from 'quasar'
 
 const loginStore = useLoginStore()
-const profileStore = useProfileStore()
 const confirmUser = useConfirmUser()
 const userActivity = useUserActivity()
 
@@ -153,9 +151,10 @@ const handleUpgradeClick = () => {
 }
 
 onBeforeMount(async () => {
-  if (!LocalStorage.getItem('EXPIRED_TIME')) {
-    profileStore.fetchProfileDetailedInformation()
-  }
+  // Profile store removed - profile information not fetched
+  // if (!LocalStorage.getItem('EXPIRED_TIME')) {
+  //   profileStore.fetchProfileDetailedInformation()
+  // }
 })
 </script>
 

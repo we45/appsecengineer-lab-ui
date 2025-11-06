@@ -3,11 +3,9 @@ import { setCourseItem } from 'src/utils/module/course'
 import { computed, ref } from 'vue'
 import { api, apiMacroMeta } from 'src/boot/axios'
 import { useAsyncOperation } from 'src/composables/useAsyncOperation'
-import { useProfileStore } from 'src/store/pinia/profile'
 
 const useDashboardStore = defineStore('dashboardStore', () => {
   const { manageAsyncOperation } = useAsyncOperation()
-  const profileStore = useProfileStore()
 
   const dashboardLoading = ref(false)
   const dashboardCourses = ref([])
@@ -93,9 +91,9 @@ const useDashboardStore = defineStore('dashboardStore', () => {
     return manageAsyncOperation(
       async () => {
         const payload = {
-          levels: profileStore.recommendedFilters.proficiency || [],
-          roles: profileStore.recommendedFilters.role || [],
-          learning_paths: profileStore.recommendedFilters.learning_paths || [],
+          levels: [],
+          roles: [],
+          learning_paths: [],
           status: ['not_started', 'new']
         }
 

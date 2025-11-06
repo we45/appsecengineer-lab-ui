@@ -2,7 +2,6 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { LocalStorage } from 'quasar'
 import { useLoginStore } from 'src/store/pinia/login'
-import { useProfileStore } from 'src/store/pinia/profile'
 import { useNotificationStore } from 'src/store/pinia/notifications'
 import { useQuasar } from 'quasar'
 import { clearClearFeed } from 'src/utils/clearfeed.js'
@@ -13,7 +12,6 @@ export function useNavigationItems() {
   const $q = useQuasar()
 
   const loginStore = useLoginStore()
-  const profileStore = useProfileStore()
   const notificationStore = useNotificationStore()
 
   // Computed properties
@@ -229,11 +227,12 @@ export function useNavigationItems() {
   }
 
   async function subscriptionPage() {
-    await profileStore.fetchUserBillingInfo()
-    if (profileStore?.paymentSubscriptionInfo?.user_info?.profile_url) {
-      const url = profileStore.paymentSubscriptionInfo.user_info.profile_url
-      window.open(url, '_blank')
-    }
+    // Profile store removed - billing info not fetched
+    // await profileStore.fetchUserBillingInfo()
+    // if (profileStore?.paymentSubscriptionInfo?.user_info?.profile_url) {
+    //   const url = profileStore.paymentSubscriptionInfo.user_info.profile_url
+    //   window.open(url, '_blank')
+    // }
   }
 
   function toggleDarkMode() {
