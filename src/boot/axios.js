@@ -125,8 +125,9 @@ function addInterceptors(apiInstance) {
           return axios.request(error.config)
         }
       } else if (error.response?.status === 401) {
-        LocalStorage.clear()
-        redirectWithHistoryRoute()
+        // Redirect removed - allow API calls to fail without redirecting
+        // LocalStorage.clear()
+        // redirectWithHistoryRoute()
       }
 
       return Promise.reject(error)
