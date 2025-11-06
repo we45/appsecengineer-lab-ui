@@ -1,6 +1,6 @@
-import authorized from './authorized'
+import unAuthorized from './unAuthorized'
 const routes = [
-  ...authorized,
+  ...unAuthorized,
   // Always leave this as last one,
   // but you can also remove it
   {
