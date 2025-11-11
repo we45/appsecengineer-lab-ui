@@ -1,20 +1,17 @@
 <script setup>
 import LabTab from 'src/components/TabsInfo/LabTab.vue'
-import CourseDetailsWrapper from '../../components/course/common/CourseDetailsWrapper.vue'
 import LabPageContent from 'src/components/course/lab/LabPageContent.vue'
 import LabPageHint from 'src/components/course/lab/LabPageHint.vue'
 import ConfettiExplosion from 'vue-confetti-explosion'
 import LabPageChallengeCompletion from 'src/components/course/lab/LabPageChallengeCompletion.vue'
 
 import { useLabStore } from 'src/store/pinia/lab'
-import { useCoursesStore } from 'src/store/pinia/courses'
 import { useRoute } from 'vue-router'
-import { urlSafeBase64Decode } from 'src/utils/reuseFunctions'
-import { onMounted, watch, shallowRef, ref } from 'vue'
-import { computed } from 'vue'
+import { onMounted, shallowRef, ref } from 'vue'
+import { useLabProvisionStore } from 'src/store/pinia/labProvision'
 
 const labStore = useLabStore()
-const coursesStore = useCoursesStore()
+const labProvisionStore = useLabProvisionStore()
 const route = useRoute()
 
 const dialogHint = shallowRef(false)
@@ -34,73 +31,15 @@ onMounted(() => {
   }
 })
 
-watch(
-  () => coursesStore.selectedCourseInfo.activeContentDetails?.content,
-  (newValue) => {
-    if (!isTokenBasedFlow.value && newValue?.object_type === 'lab') {
-      fetchLabInfo()
-    }
-  }
-)
-
 async function fetchLabInfoFromToken() {
   const payload = {
     partner_id: partnerId,
     lab_id: labId,
-    token_data: tokenData
-  }
-  await labStore.fetchLabInfoFromToken(payload)
-  await labStore.fetchLabInstructionsFromToken(payload)
-  setLabOverviewDescriptionFromToken()
-}
-
-const mappedBreadCrumb = computed(() => {
-  const mapBreadcrumb = {
-    challenge: {
-      name: 'challenges',
-      label: 'Challenges'
-    },
-    playground: {
-      name: 'playgrounds',
-      label: 'Playgrounds'
-    }
+    token: tokenData
   }
 
-  return (
-    mapBreadcrumb[coursesStore.selectedCourseInfo?.rawInfo?.event_status] ?? {
-      name: 'courses',
-      label: 'Courses'
-    }
-  )
-})
-
-async function fetchLabInfo() {
-  const payload = {
-    lab_id: coursesStore.selectedCourseInfo.activeContentDetails?.content?._key,
-    event_id: urlSafeBase64Decode(route.params.courseId)
-  }
-
-  labStore.setBasicRunningLabInfo(coursesStore.selectedCourseInfo.activeContentDetails?.content)
-  labStore.labInstructionStatus(true)
-
-  const labInfoPromise = labStore.fetchLabInfo(payload)
-  const labInsPromise = labStore.fetchLabInstructions(payload)
-
-  await Promise.all([labInfoPromise, labInsPromise])
-}
-
-function setLabOverviewDescriptionFromToken() {
-  const labInfo = labStore.listLabData?.[0]
-  if (!labInfo) return
-
-  const existingRawInfo = coursesStore.selectedCourseInfo.rawInfo ?? {}
-
-  coursesStore.selectedCourseInfo.rawInfo = {
-    ...existingRawInfo,
-    description: labInfo.description,
-    event_name: existingRawInfo.event_name ?? labInfo.name,
-    event_status: existingRawInfo.event_status
-  }
+  labProvisionStore.fetchLabInfo(payload)
+  labProvisionStore.fetchLabInstructions(payload)
 }
 
 async function showHintDialog(data) {
@@ -133,33 +72,24 @@ function openConfetti() {
 </script>
 
 <template>
-  <CourseDetailsWrapper
-    :is-loading-content="labStore.isLoading"
-    :bread-crumb-route-name="mappedBreadCrumb?.name"
-    :bread-crumb-type-name="mappedBreadCrumb?.label"
-  >
-    <template #content>
-      <ConfettiExplosion
-        v-if="showConfetti"
-        :particleCount="300"
-        :particleSize="20"
-        :stageHeight="1000"
-        :stageWidth="2000"
-        :duration="8000"
-      />
-      <LabPageContent
-        :token-data="tokenData"
-        :partner-id="partnerId"
-        :is-token-based-flow="isTokenBasedFlow"
-        @hintData="showHintDialog"
-        @verifyLab="showVerifyLabFunction"
-      />
-    </template>
-
-    <template #tabs>
-      <LabTab />
-    </template>
-  </CourseDetailsWrapper>
+  <AseCard>
+    <ConfettiExplosion
+      v-if="showConfetti"
+      :particleCount="300"
+      :particleSize="20"
+      :stageHeight="1000"
+      :stageWidth="2000"
+      :duration="8000"
+    />
+    <LabPageContent
+      :token-data="tokenData"
+      :partner-id="partnerId"
+      :is-token-based-flow="isTokenBasedFlow"
+      @hintData="showHintDialog"
+      @verifyLab="showVerifyLabFunction"
+    />
+    <LabTab />
+  </AseCard>
 
   <LabPageHint v-if="dialogHint" v-model="dialogHint" @on-cancel="dialogHint = false" />
 
