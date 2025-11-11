@@ -83,10 +83,12 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
         const res = await integration.post('provisioner/lab-get', payload)
         if (res.data.success) {
           const data = res.data.data
+          const labId = data.lab.sk
           labData.value.data = {
             ...(data.lab ?? {}),
             ...(data.running_labs ?? {}),
-            is_alive: Object.keys(data.running_labs ?? {}).length > 0
+            is_alive: data?.running_labs?.is_active,
+            lab_id: labId
           }
         }
       },
@@ -119,13 +121,13 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
   async function stopProvisioner(payload) {
     return manageAsyncOperation(
       async () => {
-        const res = await integration.post('provisioner/delete-server', payload)
+        const res = await integration.post('provisioner/lab-delete-server', payload)
         if (res.data.success) {
           labData.value.data.is_alive = false
         }
       },
       (err) => {
-        console.log(err)
+        return err
       },
       (loading) => {
         loaders.value.stopProvisioner = loading

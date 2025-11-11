@@ -7,7 +7,7 @@
         </div>
 
         <div>
-          <AseButton variant="secondary" class="float-right" @click="accessLabRules()">Prohibited activities</AseButton>
+          <AseButton variant="secondary" class="float-right" @click="accessLabRules">Prohibited activities</AseButton>
           <div v-if="labData?.is_alive && !delayLoadLabTime" class="float-right" style="display: inline-block; padding: 7px" align="right">
             <OnlyTimer
               align="right"
@@ -22,8 +22,6 @@
       </div>
 
       <div v-if="!labData?.is_alive || delayLoadLabTime" class="row items-center">
-        <q-toggle label="Enable Authentication" v-model="enableAuth" color="secondary" />
-
         <AseButton
           label="Start Lab"
           :disabled="labProvisionStore.isLoading || labProvisionStore.loaders.startProvisioner || addLongDelay"
@@ -35,31 +33,13 @@
       <div v-else class="row q-mt-md">
         <div class="col-12 q-gutter-sm">
           <AseButton variant="secondary" label="End Lab" :loading="labProvisionStore.loaders.stopProvisioner" @click="isDelete = true" />
-
-          <AseButton v-if="labData.password" @click="accessAuthenticatedLab">Access Lab</AseButton>
-          <AseButton v-if="!labData.password" @click="accessLab">Access Lab</AseButton>
-        </div>
-
-        <div class="row col-12 q-mt-md q-col-gutter-md" v-if="labData.password">
-          <div class="col-6">
-            <AseInput v-model="labUsername" label="Username" :disable="true" wrapper-class="q-mb-sm">
-              <template v-slot:after>
-                <q-icon name="fas fa-copy" class="text-green" style="cursor: pointer" @click="copyUsername(labUsername)" />
-              </template>
-            </AseInput>
-          </div>
-          <div class="col-6">
-            <AseInput v-model="labPassword" label="Password" :disable="true" wrapper-class="q-mb-sm">
-              <template v-slot:after>
-                <q-icon name="fas fa-copy" class="text-green" style="cursor: pointer" @click="copyPassword(labData.password)" />
-              </template>
-            </AseInput>
-          </div>
+          <AseButton @click="accessLab">Access Lab</AseButton>
         </div>
       </div>
 
       <div class="row" v-if="getServerProgressLocal.length > 0">
-        <div class="col" v-for="progress in getServerProgressLocal" v-bind:key="progress.id">
+        {{ getServerProgressLocal }}
+        <div class="col" v-for="progress in getServerProgressLocal" :key="progress.id">
           <AseLinearProgress
             v-if="progress.progress"
             stripe
@@ -107,7 +87,7 @@
 </template>
 
 <script setup>
-import { copyToClipboard, useQuasar } from 'quasar'
+import { useQuasar } from 'quasar'
 import { defineComponent, ref, shallowRef, computed } from 'vue'
 import { useLabProvisionStore } from 'src/store/pinia/labProvision'
 
@@ -131,16 +111,10 @@ const props = defineProps({
 const addLongDelay = shallowRef(false)
 const delayLoadLabTime = shallowRef(false)
 const isDelete = shallowRef(false)
-const labPassword = shallowRef('******')
-const labUsername = shallowRef('appsecengineer')
 const labRulesPopup = shallowRef(false)
 const provisionLabStatus = shallowRef(true)
-const runningInstanceId = shallowRef('')
-const instanceId = shallowRef('')
-const enableAuth = shallowRef(false)
 
 const getServerProgressLocal = ref([])
-const markingStatusInfo = ref({})
 const disclaimerRules = ref([
   'Using automated scanners',
   'Using brute force attacks',
@@ -166,31 +140,13 @@ function showNotify(message, error = false, options = {}) {
   })
 }
 
-async function copyUsername(name) {
-  try {
-    await copyToClipboard(name)
-    showNotify('Username has been successfully copied')
-  } catch (error) {
-    showNotify('Not able to copy', true)
-  }
-}
-async function copyPassword(password) {
-  try {
-    await copyToClipboard(password)
-    showNotify('Password has been successfully copied')
-  } catch (error) {
-    showNotify('Not able to copy', true)
-  }
-}
-
 async function provisionLab(id) {
   addLongDelay.value = true
   provisionLabStatus.value = true
   const data = {
-    lab_id: labData.value.sk,
+    lab_id: labData.value.lab_id,
     token_data: props.tokenData,
-    partner_id: props.partnerId,
-    auth: enableAuth.value
+    partner_id: props.partnerId
   }
 
   try {
@@ -202,13 +158,17 @@ async function provisionLab(id) {
       }
     ]
 
+    console.log(status)
+
     if (status.success) {
       let progressStatus = await labProvisionStore.progressProvisioner({
-        lab_id: id,
+        lab_id: labData.value.lab_id,
         event_id: data.event_id,
         token_data: props.tokenData,
         partner_id: props.partnerId
       })
+
+      console.log(progressStatus)
 
       for (let i = 1; i < 10; i++) {
         if (progressStatus.response) {
@@ -233,13 +193,19 @@ async function provisionLab(id) {
                 message: progressStatus.response.data.data.status || progressStatus.response.data.message
               }
             ]
+          } else {
+            await labProvisionStore.fetchLabInfo({
+              lab_id: labData.value.lab_id,
+              token_data: props.tokenData,
+              partner_id: props.partnerId
+            })
           }
         }
 
         await delay(8000)
 
         progressStatus = await labProvisionStore.progressProvisioner({
-          lab_id: id,
+          lab_id: labData.value.lab_id,
           event_id: data.event_id,
           token_data: props.tokenData,
           partner_id: props.partnerId
@@ -257,7 +223,7 @@ async function provisionLab(id) {
 
           if (props.isTokenBasedFlow && props.tokenData && props.partnerId) {
             await labProvisionStore.fetchLabInfo({
-              lab_id: id,
+              lab_id: labData.value.lab_id,
               token_data: props.tokenData,
               partner_id: props.partnerId
             })
@@ -308,18 +274,18 @@ function accessLab() {
   window.open(url, '_blank')
 }
 
-function accessAuthenticatedLab() {
-  const url = 'https://appsecengineer:' + labData.value.password + '@' + labData.value.dns_entry
-  window.open(url, '_blank')
-}
-
-function labConfirmDeletion(event) {
-  labProvisionStore.stopProvisioner({
-    lab_id: labData.value.sk,
-    event_id: labData.value.event_id,
+async function labConfirmDeletion() {
+  await labProvisionStore.stopProvisioner({
+    lab_id: labData.value.lab_id,
     partner_id: props.partnerId,
     token: props.tokenData
   })
+  await labProvisionStore.fetchLabInfo({
+    lab_id: labData.value.lab_id,
+    token: props.tokenData,
+    partner_id: props.partnerId
+  })
+  isDelete.value = false
 }
 
 function accessLabRules() {
