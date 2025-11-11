@@ -51,6 +51,7 @@ async function fetchLabInfoFromToken() {
   }
   await labStore.fetchLabInfoFromToken(payload)
   await labStore.fetchLabInstructionsFromToken(payload)
+  setLabOverviewDescriptionFromToken()
 }
 
 const mappedBreadCrumb = computed(() => {
@@ -86,6 +87,20 @@ async function fetchLabInfo() {
   const labInsPromise = labStore.fetchLabInstructions(payload)
 
   await Promise.all([labInfoPromise, labInsPromise])
+}
+
+function setLabOverviewDescriptionFromToken() {
+  const labInfo = labStore.listLabData?.[0]
+  if (!labInfo) return
+
+  const existingRawInfo = coursesStore.selectedCourseInfo.rawInfo ?? {}
+
+  coursesStore.selectedCourseInfo.rawInfo = {
+    ...existingRawInfo,
+    description: labInfo.description,
+    event_name: existingRawInfo.event_name ?? labInfo.name,
+    event_status: existingRawInfo.event_status
+  }
 }
 
 async function showHintDialog(data) {

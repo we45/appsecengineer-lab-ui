@@ -52,15 +52,11 @@ export const useNewProvisionStore = defineStore('newProvision', () => {
       let res
       if (payload.token_data && payload.partner_id) {
         const { token_data, partner_id, lab_id, event_id } = payload
-        const deletePayload = {
-          lab_id,
-          event_id
-        }
-        res = await integration.post('provisioner/delete-server', deletePayload, {
-          headers: {
-            'x-ase-api-token': token_data,
-            'x-ase-customer-id': partner_id
-          }
+        res = await integration.post('provisioner/delete-server', {
+          token: token_data,
+          partner_id: partner_id,
+          lab_id: lab_id,
+          event_id: event_id
         })
       } else {
         // Use regular apiProvisional for non-token flows
@@ -133,15 +129,11 @@ export const useNewProvisionStore = defineStore('newProvision', () => {
       let res
       if (payload.token_data && payload.partner_id) {
         const { token_data, partner_id, lab_id, event_id } = payload
-        const deletePayload = {
-          lab_id,
-          event_id
-        }
-        res = await integration.post('provisioner/delete-server', deletePayload, {
-          headers: {
-            'x-ase-api-token': token_data,
-            'x-ase-customer-id': partner_id
-          }
+        res = await integration.post('provisioner/delete-server', {
+          token: token_data,
+          partner_id: partner_id,
+          lab_id: lab_id,
+          event_id: event_id
         })
       } else {
         // Use regular apiProvisional for non-token flows

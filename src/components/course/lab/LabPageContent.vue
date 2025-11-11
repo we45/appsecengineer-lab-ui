@@ -239,7 +239,6 @@ const props = defineProps({
 })
 
 const addLongDelay = shallowRef(false)
-const enableAuth = shallowRef(false)
 const delayLoadLabTime = shallowRef(false)
 const isDelete = shallowRef(false)
 const labPassword = shallowRef('******')

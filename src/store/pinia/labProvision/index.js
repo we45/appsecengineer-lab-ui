@@ -8,18 +8,11 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
       // Use integration API with token-based auth if token_data is provided
       if (payload.token_data && payload.partner_id) {
         const { token_data, partner_id, lab_id } = payload
-        const res = await integration.post(
-          'provisioner/lab-start-server',
-          {
-            lab_id
-          },
-          {
-            headers: {
-              'x-ase-api-token': token_data,
-              'x-ase-customer-id': partner_id
-            }
-          }
-        )
+        const res = await integration.post('provisioner/lab-start-server', {
+          token: token_data,
+          partner_id: partner_id,
+          lab_id: lab_id
+        })
         return res.data
       } else {
         // Use regular apiProvisional for non-token flows
@@ -36,18 +29,11 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
       // Use integration API with token-based auth if token_data is provided
       if (payload.token_data && payload.partner_id) {
         const { token_data, partner_id, lab_id } = payload
-        const res = await integration.post(
-          'provisioner/lab-get-progress',
-          {
-            lab_id
-          },
-          {
-            headers: {
-              'x-ase-api-token': token_data,
-              'x-ase-customer-id': partner_id
-            }
-          }
-        )
+        const res = await integration.post('provisioner/lab-get-progress', {
+          token: token_data,
+          partner_id: partner_id,
+          lab_id: lab_id
+        })
         return res.data
       } else {
         // Use regular apiProvisional for non-token flows

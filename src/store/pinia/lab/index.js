@@ -313,19 +313,25 @@ export const useLabStore = defineStore('labStore', () => {
       let res
       try {
         // Call the new API endpoint with token-based authentication
-        res = await integration.post(
-          'provisioner/lab-get',
-          {
-            lab_id: payload.lab_id
-          },
-          {
-            headers: {
-              'x-ase-api-token': payload.token_data,
-              partner_id: payload.partner_id
-            },
-            noLoading: true
-          }
-        )
+        // res = await integration.post(
+        //   'provisioner/lab-get',
+        //   {
+        //     lab_id: payload.lab_id
+        //   },
+        //   {
+        //     headers: {
+        //       'x-ase-api-token': payload.token_data,
+        //       'partner_id': payload.partner_id
+        //     },
+        //     noLoading: true
+        //   }
+        // )
+
+        res = await integration.post('provisioner/lab-get', {
+          token: payload.token_data,
+          partner_id: payload.partner_id,
+          lab_id: payload.lab_id
+        })
 
         if (!res.data.success) {
           throw new Error(res.data.message || 'Failed to fetch lab info')
@@ -414,19 +420,11 @@ export const useLabStore = defineStore('labStore', () => {
 
         try {
           // Call the new API endpoint with token-based authentication
-          const res = await integration.post(
-            'provisioner/lab-instructions',
-            {
-              lab_id: payload.lab_id
-            },
-            {
-              headers: {
-                'x-ase-api-token': payload.token_data,
-                partner_id: payload.partner_id
-              },
-              noLoading: true
-            }
-          )
+          const res = await integration.post('provisioner/lab-instructions', {
+            token: payload.token_data,
+            partner_id: payload.partner_id,
+            lab_id: payload.lab_id
+          })
 
           isLabInstruction.value = false
           if (res.data.success) {
