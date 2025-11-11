@@ -1,5 +1,4 @@
 <script setup>
-import { urlSafeBase64Encode } from 'src/utils/reuseFunctions'
 import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNewProvisionStore } from 'src/store/pinia/newProvision'
@@ -20,13 +19,6 @@ const instance_id = ref('')
 const markingStatusInfo = ref({})
 const runningLabName = ref('')
 const isDelete = ref(false)
-
-function accessLab(event_id, subject_id, lab_id) {
-  const url = `/portal/course-info/lab/${urlSafeBase64Encode(event_id)}/${urlSafeBase64Encode(subject_id)}/${urlSafeBase64Encode(lab_id)}`
-  setTimeout(() => {
-    window.location.replace(url)
-  })
-}
 
 function stopLab(running_instance, instance, labName, labInfo) {
   newLabInfo.value = labInfo
@@ -87,13 +79,6 @@ function labConfirmDeleteCancel(event) {
         label="End lab"
         aria-label="End Lab"
         @click.stop="stopLab(data.running_instance_id, data.instance_id, data.name, data)"
-      />
-      <AseButton
-        v-if="!data.is_completed"
-        class="col-5"
-        label="Go to lab"
-        aria-label="Go to Lab"
-        @click.stop="accessLab(data.event_id, data.subject_id, data.id)"
       />
     </div>
     <Delete

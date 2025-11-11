@@ -416,10 +416,22 @@ async function provisionLab(id) {
           ]
           await delay(10000)
           await resetData()
-          await labStore.fetchLabInfo({
-            lab_id: id,
-            event_id: data.event_id
-          })
+
+          if (props.isTokenBasedFlow && props.tokenData && props.partnerId) {
+            await labStore.fetchLabInfoFromToken({
+              lab_id: id,
+              token_data: props.tokenData,
+              partner_id: props.partnerId
+            })
+          } else {
+            await labStore.fetchLabInfo(
+              {
+                lab_id: id,
+                event_id: data.event_id
+              },
+              progressStatus
+            )
+          }
           userActivity.enableActivity()
           break
         }

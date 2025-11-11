@@ -195,54 +195,69 @@ export const useLabStore = defineStore('labStore', () => {
     )
   }
 
-  function fetchLabInfo(payload) {
+  function fetchLabInfo(payload, dataFromProgress = null) {
     return manageLoading(async () => {
       challengeSolution.value = {}
-      const res = await api.post('lab/user-running-lab', payload, {
-        crossDomain: true,
-        noLoading: true
-      })
-      const baseCondition = Object.keys(res.data.data.running_labs).length > 0
+
+      let responseData
+      if (dataFromProgress) {
+        const progressData = dataFromProgress.data || dataFromProgress
+        responseData = {
+          data: {
+            lab: progressData.lab || progressData.data?.lab || {},
+            running_labs: progressData.running_labs || progressData.data?.running_labs || {},
+            url: progressData.url || progressData.data?.url || ''
+          }
+        }
+      } else {
+        const res = await api.post('lab/user-running-lab', payload, {
+          crossDomain: true,
+          noLoading: true
+        })
+        responseData = res.data
+      }
+
+      const baseCondition = Object.keys(responseData.data.running_labs || {}).length > 0
 
       listLabData.value = [
         {
-          name: res.data.data.lab.lab_name,
-          event_id: res.data.data.lab.event_id || res.data.data.running_labs.event_id,
-          id: res.data.data.lab.sk,
-          lab_id: urlSafeBase64Encode(res.data.data.lab.sk),
-          description: res.data.data.lab.description,
-          regions: res.data.data.lab.regions,
-          challenge_id: res.data.data.lab.challenge_id || '',
-          url_badge: res.data.data.url || '',
-          is_alive: baseCondition ? res.data.data.running_labs.is_active : false,
+          name: responseData.data.lab.lab_name,
+          event_id: responseData.data.lab.event_id || responseData.data.running_labs?.event_id,
+          id: responseData.data.lab.sk,
+          lab_id: urlSafeBase64Encode(responseData.data.lab.sk),
+          description: responseData.data.lab.description,
+          regions: responseData.data.lab.regions,
+          challenge_id: responseData.data.lab.challenge_id || '',
+          url_badge: responseData.data.url || '',
+          is_alive: baseCondition ? responseData.data.running_labs.is_active !== false : false,
 
           ...(baseCondition
             ? {
-                dns_entry: 'https://' + res.data.data.running_labs.dns_entry,
-                dns_pass_entry: res.data.data.running_labs.dns_entry,
-                ipv4: res.data.data.running_labs.ipv4,
-                password: res.data.data.running_labs.password,
-                running_ttl: res.data.data.running_labs.running_ttl,
-                created_on: res.data.data.running_labs.created_on,
-                port_map: res.data.data.running_labs.port_map,
-                running_instance_id: res.data.data.running_labs.pk,
-                instance_id: res.data.data.running_labs.sk
+                dns_entry: 'https://' + responseData.data.running_labs.dns_entry,
+                dns_pass_entry: responseData.data.running_labs.dns_entry,
+                ipv4: responseData.data.running_labs.ipv4,
+                password: responseData.data.running_labs.password,
+                running_ttl: responseData.data.running_labs.running_ttl,
+                created_on: responseData.data.running_labs.created_on,
+                port_map: responseData.data.running_labs.port_map,
+                running_instance_id: responseData.data.running_labs.pk,
+                instance_id: responseData.data.running_labs.sk
               }
             : {}),
 
-          ...(baseCondition && res.data?.data?.running_labs?.cloud_type === 'multi'
+          ...(baseCondition && responseData.data?.running_labs?.cloud_type === 'multi'
             ? {
-                cloud_type: res.data.data.lab.cloud_type,
-                password: res.data?.data?.running_labs?.credentials?.password,
+                cloud_type: responseData.data.lab.cloud_type,
+                password: responseData.data?.running_labs?.credentials?.password,
                 is_alive: true
               }
             : {}),
 
-          ...(res.data.data.lab.is_cloud
+          ...(responseData.data.lab.is_cloud
             ? {
-                ou_id: res.data.data.lab.ou_id,
-                cloud_type: res.data.data.lab.cloud_type,
-                is_cloud: res.data.data.lab.is_cloud
+                ou_id: responseData.data.lab.ou_id,
+                cloud_type: responseData.data.lab.cloud_type,
+                is_cloud: responseData.data.lab.is_cloud
               }
             : {})
         }

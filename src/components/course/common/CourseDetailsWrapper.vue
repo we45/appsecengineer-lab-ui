@@ -121,7 +121,7 @@ watch(
   >
     <h1 id="course-details-title" class="sr-only">Course Details</h1>
 
-    <CourseDetailsWrapperSkeleton v-if="coursesStore.isLoading || isLoadingCourseInfo" />
+    <CourseDetailsWrapperSkeleton v-if="coursesStore.isLoading || isLoadingCourseInfo || isLoadingContent" />
     <template v-else>
       <!-- <template v-if="coursesStore.selectedCourseInfo.rawInfo && !isLoadingCourseInfo"></template> -->
       <template v-if="!isLoadingCourseInfo">
