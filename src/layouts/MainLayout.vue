@@ -8,15 +8,9 @@
       class="absolute full-width"
       style="z-index: 9999"
     />
-    <q-header
-      elevated
-      class="bg-transparent"
-      :class="{
-        'no-pointer-events': userActivity.isActivityDisabled
-      }"
-    >
+    <q-header elevated class="bg-transparent">
       <div class="row justify-between flex-center relative-position">
-        <MainNavbar @toggleSidebar="isSidebarOpen = !isSidebarOpen" />
+        <MainNavbar />
       </div>
     </q-header>
     <q-page-container>
@@ -27,18 +21,10 @@
           paddingRight: !isDesktop ? '0px !important' : ''
         }"
       >
-        <!-- <StreakNotification
-          v-if="showDevopsNotify"
-          title="Webinar: The SBOMs Don’t Lie: Analyzing Dependencies in Vulnerable Apps | 21 Aug - 11 AM EST | "
-          @on-click="handleNotificationClick"
-          @close="clearNotify"
-        /> -->
-        <!-- <BreadCrumbIndex class="q-mb-lg" /> -->
         <router-view />
       </q-page>
     </q-page-container>
 
-    <!-- <RecomendationForm v-model="showRecommendationDialog" @onDone="handleRecommendationDone" @onCancel="handleRecommendationCancel" /> -->
     <q-footer
       class="row justify-between bg-transparent items-center no-wrap q-pr-xl q-pl-md ase_footer q-my-md q-mr-xs q-ml-md"
       style="gap: 10px"
@@ -84,94 +70,20 @@
 </template>
 
 <script setup>
-import BreadCrumbIndex from 'components/breadcrumb/BreadCrumbIndex.vue'
-import { LocalStorage, useQuasar } from 'quasar'
+import { LocalStorage } from 'quasar'
 import { getCurentYear } from 'src/utils/helpers'
-import { ref, onBeforeMount, provide, shallowRef, watch, nextTick } from 'vue'
-import LayoutSidebar from './LayoutSidebar.vue'
+import { ref } from 'vue'
 import MainNavbar from './MainNavbar.vue'
 import { useGlobalLoaderStore } from 'src/store/pinia/loader'
-import StreakNotification from 'src/components/common/StreakNotification.vue'
-import { useRouter } from 'vue-router'
 import { provideScreenSize } from 'src/composables/useScreenSize'
-import { useCoursesStore } from 'src/store/pinia/courses'
-import { useUserActivity } from 'src/store/pinia/userActivity'
 
 const { isMobile, isDesktop } = provideScreenSize()
 const loader = useGlobalLoaderStore()
-const coursesStore = useCoursesStore()
-const router = useRouter()
-const userActivity = useUserActivity()
 
-const $q = useQuasar()
-const showMainSidebar = ref(true)
 const confirm = ref(LocalStorage.getItem('verify') === 'FORCE')
-const isMiniSidebar = shallowRef(false)
-const isSidebarOpen = shallowRef(false)
-const showDevopsNotify = ref(false)
-const showRecommendationDialog = ref(false)
-
-onBeforeMount(async () => {
-  // coursesStore.fetchTags()
-  nextTick(() => {
-    isSidebarOpen.value = isDesktop.value
-  })
-  const isSeen = LocalStorage.has('seen_devsecops_offer') && LocalStorage.getItem('seen_devsecops_offer')
-  showDevopsNotify.value = !isSeen
-
-  // assessmentStore.fetchAssessments()
-  // await profileStore.fetchProfileDetailedInformation()
-  // if (learningPath.learningPathOptions.length === 0) {
-  //   learningPath.fetchLearningPath({})
-  // }
-  // checkAndShowRecommendationDialog()
-})
-
-watch(isDesktop, (newValue) => {
-  isSidebarOpen.value = newValue
-})
-
-function clearNotify() {
-  LocalStorage.set('seen_devsecops_offer', true)
-  showDevopsNotify.value = false
-}
-
-function handleNotificationClick() {
-  window.open('https://www.linkedin.com/events/7361765185537146880/', '_blank')
-}
 
 function isLearningOrigin() {
   return window.location.origin === 'https://learning.appsecengineer.com'
-}
-
-function handleToggleMiniSidebar() {
-  isMiniSidebar.value = !isMiniSidebar.value
-}
-
-function handleRecommendationDone() {
-  showRecommendationDialog.value = false
-}
-
-function handleRecommendationCancel() {
-  showRecommendationDialog.value = false
-}
-
-function checkAndShowRecommendationDialog() {
-  // Profile store removed - recommendation dialog disabled
-  return
-  // const ignoredData = LocalStorage.getItem('feedbackFormIgnore')
-  // if (profileStore.preferencesSubmitted) {
-  //   dashboardStore.fetchRecommendedCourses()
-  // } else if (ignoredData) {
-  //   const parsedData = JSON.parse(ignoredData)
-  //   const userEmail = profileStore.profileDetailedInfo.email
-  //   const hasIgnored = parsedData.some((item) => item.email === userEmail && item.formIgnore)
-  //   if (hasIgnored) {
-  //     return
-  //   }
-  // } else {
-  //   showRecommendationDialog.value = true
-  // }
 }
 </script>
 

@@ -1,8 +1,25 @@
-import unAuthorized from './unAuthorized'
+import MainLayout from 'src/layouts/MainLayout.vue'
+
 const routes = [
-  ...unAuthorized,
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: '/',
+    name: '',
+    component: MainLayout,
+    redirect: {
+      name: 'running-lab'
+    },
+    children: [
+      {
+        name: 'running-lab',
+        path: 'token',
+        component: () => import('src/pages/RunningLab/RunningLabIndex.vue'),
+        meta: {
+          title: 'Lab Info',
+          icon: 'science'
+        }
+      }
+    ]
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404Index.vue'),

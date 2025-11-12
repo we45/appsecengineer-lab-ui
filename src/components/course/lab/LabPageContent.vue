@@ -91,8 +91,8 @@ import { useQuasar } from 'quasar'
 import { defineComponent, ref, shallowRef, computed } from 'vue'
 import { useLabProvisionStore } from 'src/store/pinia/labProvision'
 
-import OnlyTimer from 'src/components/countdown/OnlyTimer.vue'
-import Delete from 'src/components/shared/Delete.vue'
+import OnlyTimer from 'src/components/course/lab/OnlyTimer.vue'
+import Delete from 'src/components/course/lab/Delete.vue'
 
 defineComponent({ name: 'LabPageContent' })
 

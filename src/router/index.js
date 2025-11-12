@@ -2,7 +2,6 @@
 /* eslint-disable indent */
 import { route } from 'quasar/wrappers'
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
-import { useBreadcrumbsStore } from 'src/store/pinia/breadCrumb'
 
 import routes from './routes'
 
@@ -32,8 +31,6 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
   Router.beforeEach((to, from, next) => {
-    const breadCrumbStore = useBreadcrumbsStore()
-    breadCrumbStore.breadCrumb = []
     next()
   })
   return Router

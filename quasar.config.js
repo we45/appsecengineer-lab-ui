@@ -28,7 +28,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: ['axios', 'vueconfetti', 'vuerecaptcha', 'wrapper-components', 'pinia', 'ase-components', 'atoms', 'vue-virtual-scroller'],
+    boot: ['axios', 'vueconfetti', 'vuerecaptcha', 'pinia', 'ase-components', 'vue-virtual-scroller'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['palette.scss', 'app.scss', 'preDefinedClasses.scss'],

@@ -1,6 +1,7 @@
 <script setup>
 import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
+import BaseInnerLoading from '../wrappers/BaseInnerLoading/BaseInnerLoading.vue'
 
 defineComponent({
   name: 'AseCard'

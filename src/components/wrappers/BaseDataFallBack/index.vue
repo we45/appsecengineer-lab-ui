@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import noDataImage from 'assets/nData.png'
 
 const props = defineProps({

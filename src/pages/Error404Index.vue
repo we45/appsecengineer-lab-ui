@@ -4,11 +4,7 @@
   </section>
 </template>
 
-<script setup>
-setTimeout(() => {
-  window.location.href = '/'
-}, 3000)
-</script>
+<script setup></script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');

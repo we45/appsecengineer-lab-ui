@@ -3,7 +3,6 @@
     class="ase_toolbar q-pa-md q-pl-lg"
     style="border-left: none !important"
     :style="{
-      opacity: userActivity.isActivityDisabled ? '.7' : '1',
       paddingRight: isMobile ? '0px !important' : '',
       paddingLeft: isMobile ? '14px !important' : ''
     }"
@@ -47,20 +46,14 @@ import { LocalStorage, useQuasar } from 'quasar'
 
 import { computed } from 'vue'
 
-import { useLoginStore } from 'src/store/pinia/login'
-import { useUserActivity } from 'src/store/pinia/userActivity'
 import { useScreenSize } from 'src/composables/useScreenSize'
 import { useNavigationItems } from 'src/composables/useNavigationItems'
-
-import UserDropdown from './UserDropdown.vue'
 
 const emit = defineEmits(['toggleSidebar'])
 
 const $q = useQuasar()
 
-const loginStore = useLoginStore()
-const userActivity = useUserActivity()
-const { isDesktop, isMobile, isTablet } = useScreenSize()
+const { isMobile, isTablet } = useScreenSize()
 const { getNavbarItems } = useNavigationItems()
 
 const navbarItems = computed(() => getNavbarItems(isMobile.value))
