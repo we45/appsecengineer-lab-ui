@@ -60,7 +60,7 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
           return res.data
         }
       },
-      () => {
+      (error) => {
         if (error?.response?.status === 500) {
           Notify.create({
             type: 'negative',
@@ -70,6 +70,7 @@ export const useLabProvisionStore = defineStore('labProvision', () => {
             message: error?.response?.data?.message
           })
         }
+        return { response: error?.response || error }
       },
       (loading) => {
         loaders.value.progressProvisioner = loading

@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { useLabProvisionStore } from 'src/store/pinia/labProvision'
+
 const FULL_DASH_ARRAY = 283
 const WARNING_THRESHOLD = 10
 const ALERT_THRESHOLD = 5
@@ -29,7 +31,8 @@ const COLOR_CODES = {
 export default {
   name: 'OnlyTimer',
   setup() {
-    return {}
+    const labProvisionStore = useLabProvisionStore()
+    return { labProvisionStore }
   },
   data() {
     return { timePassed: 0, timerInterval: null, TIME_LIMIT: 0, showTimer: true, markingStatusInfo: {} }
@@ -69,7 +72,7 @@ export default {
       }
     }
   },
-  props: ['starttime', 'endtime', 'running_instance_id', 'instance_id', 'labInfo'],
+  props: ['starttime', 'endtime', 'running_instance_id', 'instance_id', 'labInfo', 'tokenData', 'partnerId'],
   mounted() {
     // Convert start and end times to UTC milliseconds
     const start = new Date(this.starttime * 1000).getTime()
@@ -82,7 +85,7 @@ export default {
     const passTime = end - utc_now
 
     if (distance < 0 && passTime < 0) {
-      // need to stop lab
+      this.stopLab()
     } else if (distance < 0 && passTime > 0) {
       this.TIME_LIMIT = passTime
     }
@@ -93,8 +96,22 @@ export default {
   },
 
   methods: {
+    async stopLab() {
+      if (this.labInfo?.lab_id) {
+        this.labProvisionStore.stopProvisioner({
+          lab_id: this.labInfo.lab_id,
+          partner_id: this.partnerId,
+          token: this.tokenData
+        })
+        this.labProvisionStore.fetchLabInfo({
+          lab_id: this.labInfo.lab_id,
+          token: this.tokenData,
+          partner_id: this.partnerId
+        })
+      }
+    },
     onTimesUp() {
-      // need to stop lab
+      this.stopLab()
       clearInterval(this.timerInterval)
     },
 

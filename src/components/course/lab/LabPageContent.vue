@@ -10,12 +10,15 @@
           <AseButton variant="secondary" class="float-right" @click="accessLabRules">Prohibited activities</AseButton>
           <div v-if="labData?.is_alive && !delayLoadLabTime" class="float-right" style="display: inline-block; padding: 7px" align="right">
             <OnlyTimer
+              :key="`timer-${labData?.running_instance_id}-${labData?.created_on}`"
               align="right"
               :starttime="labData?.created_on"
               :endtime="labData?.running_ttl"
               :running_instance_id="labData?.running_instance_id"
               :instance_id="labData?.instance_id"
               :labInfo="labData"
+              :token-data="props.tokenData"
+              :partner-id="props.partnerId"
             />
           </div>
         </div>
@@ -38,7 +41,6 @@
       </div>
 
       <div class="row" v-if="getServerProgressLocal.length > 0">
-        {{ getServerProgressLocal }}
         <div class="col" v-for="progress in getServerProgressLocal" :key="progress.id">
           <AseLinearProgress
             v-if="progress.progress"
@@ -158,64 +160,23 @@ async function provisionLab(id) {
       }
     ]
 
-    console.log(status)
-
     if (status.success) {
-      let progressStatus = await labProvisionStore.progressProvisioner({
-        lab_id: labData.value.lab_id,
-        event_id: data.event_id,
-        token_data: props.tokenData,
-        partner_id: props.partnerId
-      })
-
-      console.log(progressStatus)
+      let progressStatus
 
       for (let i = 1; i < 10; i++) {
-        if (progressStatus.response) {
-          if (progressStatus.response.status === 500) {
-            await resetData()
-            showNotify(status.response.data.message, true, {
-              progress: true,
-              icon: 'warning'
-            })
-            break
-          } else if (progressStatus.response.status === 400 && i === 9) {
-            await resetData()
-            showNotify('Something went wrong', true, {
-              progress: true,
-              icon: 'warning'
-            })
-            break
-          } else if (progressStatus.response.status === 400) {
-            getServerProgressLocal.value = [
-              {
-                progress: 50 * (i * 0.5),
-                message: progressStatus.response.data.data.status || progressStatus.response.data.message
-              }
-            ]
-          } else {
-            await labProvisionStore.fetchLabInfo({
-              lab_id: labData.value.lab_id,
-              token_data: props.tokenData,
-              partner_id: props.partnerId
-            })
-          }
-        }
-
-        await delay(8000)
-
+        // Call progressProvisioner API
         progressStatus = await labProvisionStore.progressProvisioner({
           lab_id: labData.value.lab_id,
-          event_id: data.event_id,
           token_data: props.tokenData,
           partner_id: props.partnerId
         })
 
-        if (progressStatus.success) {
+        // Check for 200 success status first
+        if (progressStatus && progressStatus.success) {
           getServerProgressLocal.value = [
             {
               progress: 99,
-              message: progressStatus.data.status
+              message: progressStatus.data?.status || progressStatus.status || 'Lab provisioned successfully'
             }
           ]
           await delay(10000)
@@ -224,7 +185,7 @@ async function provisionLab(id) {
           if (props.isTokenBasedFlow && props.tokenData && props.partnerId) {
             await labProvisionStore.fetchLabInfo({
               lab_id: labData.value.lab_id,
-              token_data: props.tokenData,
+              token: props.tokenData,
               partner_id: props.partnerId
             })
           }
@@ -232,8 +193,41 @@ async function provisionLab(id) {
           break
         }
 
-        if (i === 8) {
-          await delay(4000)
+        // Check for error responses (400 or 500)
+        if (progressStatus && progressStatus.response) {
+          const responseStatus = progressStatus.response.status
+
+          if (responseStatus === 500) {
+            await resetData()
+            showNotify(progressStatus.response.data?.message || 'Server error occurred', true, {
+              progress: true,
+              icon: 'warning'
+            })
+            break
+          } else if (responseStatus === 400 && i === 9) {
+            await resetData()
+            showNotify('Something went wrong', true, {
+              progress: true,
+              icon: 'warning'
+            })
+            break
+          } else if (responseStatus === 400) {
+            getServerProgressLocal.value = [
+              {
+                progress: 50 * (i * 0.5),
+                message:
+                  progressStatus.response.data?.data?.status || progressStatus.response.data?.message || 'Provisioning in progress...'
+              }
+            ]
+          }
+        }
+
+        // Wait before next poll (only if not the last iteration)
+        if (i < 9) {
+          await delay(8000)
+          if (i === 8) {
+            await delay(4000)
+          }
         }
       }
     } else {
